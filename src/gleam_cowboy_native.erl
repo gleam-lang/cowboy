@@ -1,6 +1,6 @@
 -module(gleam_cowboy_native).
 
--export([init/2, start_link/2]).
+-export([init/2, start_link/2, read_entire_body/1]).
 
 start_link(Handler, Port) ->
     RanchOptions = #{
@@ -20,3 +20,12 @@ start_link(Handler, Port) ->
 
 init(Req, Handler) ->
     {ok, Handler(Req), Req}.
+
+read_entire_body(Req) ->
+    read_entire_body([], Req).
+
+read_entire_body(Body, Req0) ->
+    case cowboy_req:read_body(Req0) of
+        {ok, Chunk, Req1} -> {list_to_binary([Body, Chunk]), Req1};
+        {more, Chunk, Req1} -> read_entire_body([Body, Chunk], Req1)
+    end.
