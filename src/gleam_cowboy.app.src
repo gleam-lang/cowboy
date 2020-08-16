@@ -6,7 +6,8 @@
    [kernel,
     stdlib,
     gleam_stdlib,
-    cowboy
+    cowboy,
+    ranch
    ]},
   {env,[]},
   {modules, []},
