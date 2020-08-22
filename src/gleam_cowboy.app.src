@@ -1,5 +1,5 @@
 {application, gleam_cowboy,
- [{description, "A Gleam program"},
+ [{description, "A Gleam HTTP service adapter for the [Cowboy][cowboy] web server"},
   {vsn, "0.1.0"},
   {registered, []},
   {applications,
