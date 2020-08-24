@@ -3,7 +3,7 @@ import gleam/pair
 import gleam/map.{Map}
 import gleam/option.{None, Option, Some}
 import gleam/result
-import gleam/http
+import gleam/http.{Header}
 import gleam/otp/process.{Pid}
 import gleam/bit_builder.{BitBuilder}
 import gleam/dynamic.{Dynamic}
@@ -93,7 +93,7 @@ fn proplist_get_all(input: List(tuple(a, b)), key: a) -> List(b) {
 // https://github.com/gleam-experiments/cowboy/issues/3
 fn cowboy_format_headers(headers: List(Header)) -> Map(String, Dynamic) {
   let set_cookie_headers = proplist_get_all(headers, "set-cookie")
-  response.headers
+  headers
   |> list.map(pair.map_second(_, dynamic.from))
   |> map.from_list
   |> map.insert("set-cookie", dynamic.from(set_cookie_headers))

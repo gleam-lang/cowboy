@@ -1,6 +1,6 @@
 {application, gleam_cowboy,
  [{description, "A Gleam HTTP service adapter for the Cowboy web server"},
-  {vsn, "0.1.1"},
+  {vsn, "0.1.2"},
   {registered, []},
   {applications,
    [kernel,
@@ -14,5 +14,5 @@
   {modules, []},
 
   {licenses, ["Apache 2.0"]},
-  {links, []}
+  {links, [{"GitHub", "https://github.com/gleam-experiments/cowboy"}]}
 ]}.
