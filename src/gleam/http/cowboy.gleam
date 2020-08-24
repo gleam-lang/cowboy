@@ -1,3 +1,4 @@
+import gleam/list
 import gleam/map.{Map}
 import gleam/option.{None, Option, Some}
 import gleam/result
