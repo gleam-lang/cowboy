@@ -78,8 +78,8 @@ fn service_to_handler(
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
     let tuple(body, request) = get_body(request)
-    let response =
-      service(http.Request(
+    let response = service(
+      http.Request(
         body: body,
         headers: get_headers(request),
         host: get_host(request),
@@ -88,7 +88,8 @@ fn service_to_handler(
         port: Some(get_port(request)),
         query: get_query(request),
         scheme: get_scheme(request),
-      ))
+      ),
+    )
     let status = response.status
     let headers = map.from_list(response.headers)
     let body = response.body
