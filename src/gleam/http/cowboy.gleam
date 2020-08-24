@@ -73,6 +73,18 @@ external fn get_host(CowboyRequest) -> String =
 external fn get_port(CowboyRequest) -> Int =
   "cowboy_req" "port"
 
+fn key_filter(input: List(tuple(a, b)), key: a) -> List(b) {
+  list.filter_map(
+    input,
+    fn(item) {
+      case item {
+        tuple(k, v) if k == key -> Ok(v)
+        _ -> Error(Nil)
+      }
+    },
+  )
+}
+
 fn service_to_handler(
   service: http.Service(BitString, BitBuilder),
 ) -> fn(CowboyRequest) -> CowboyRequest {
@@ -92,6 +104,10 @@ fn service_to_handler(
     )
     let status = response.status
     let headers = map.from_list(response.headers)
+    let headers = map.put(
+      "set-cookie",
+      key_filter(response.headers, "set-cookie"),
+    )
     let body = response.body
     cowboy_reply(status, headers, body, request)
   }
