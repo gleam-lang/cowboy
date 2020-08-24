@@ -1,4 +1,5 @@
 import gleam/list
+import gleam/pair
 import gleam/map.{Map}
 import gleam/option.{None, Option, Some}
 import gleam/result
@@ -17,7 +18,7 @@ external fn erlang_start_link(
 
 external fn cowboy_reply(
   Int,
-  Map(String, String),
+  Map(String, Dynamic),
   BitBuilder,
   CowboyRequest,
 ) -> CowboyRequest =
@@ -104,10 +105,18 @@ fn service_to_handler(
       ),
     )
     let status = response.status
-    let headers = map.from_list(response.headers)
-    let headers = map.put(
+
+    // In cowboy all header values are strings except set-cookie.
+    let headers = list.map(
+      response.headers,
+      pair.map_second(_, dynamic.from(_)),
+    )
+    let set_cookie_headers: List(Dynamic) = key_filter(headers, "set-cookie")
+    let headers: Map(String, Dynamic) = map.from_list(headers)
+    let headers = map.insert(
+      headers,
       "set-cookie",
-      key_filter(response.headers, "set-cookie"),
+      dynamic.from(set_cookie_headers),
     )
     let body = response.body
     cowboy_reply(status, headers, body, request)
