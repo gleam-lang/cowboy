@@ -75,7 +75,7 @@ external fn get_host(CowboyRequest) -> String =
 external fn get_port(CowboyRequest) -> Int =
   "cowboy_req" "port"
 
-fn key_filter(input: List(tuple(a, b)), key: a) -> List(b) {
+fn proplist_get_all(input: List(tuple(a, b)), key: a) -> List(b) {
   list.filter_map(
     input,
     fn(item) {
@@ -87,13 +87,25 @@ fn key_filter(input: List(tuple(a, b)), key: a) -> List(b) {
   )
 }
 
+// In cowboy all header values are strings except set-cookie, which is a
+// list. This list has a special-case in Cowboy so we need to set it
+// correctly.
+// https://github.com/gleam-experiments/cowboy/issues/3
+fn cowboy_format_headers(headers: List(Header)) -> Map(String, Dynamic) {
+  let set_cookie_headers = proplist_get_all(headers, "set-cookie")
+  response.headers
+  |> list.map(pair.map_second(_, dynamic.from))
+  |> map.from_list
+  |> map.insert("set-cookie", dynamic.from(set_cookie_headers))
+}
+
 fn service_to_handler(
   service: http.Service(BitString, BitBuilder),
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
     let tuple(body, request) = get_body(request)
-    let response = service(
-      http.Request(
+    let response =
+      service(http.Request(
         body: body,
         headers: get_headers(request),
         host: get_host(request),
@@ -102,22 +114,10 @@ fn service_to_handler(
         port: Some(get_port(request)),
         query: get_query(request),
         scheme: get_scheme(request),
-      ),
-    )
+      ))
     let status = response.status
 
-    // In cowboy all header values are strings except set-cookie.
-    let headers = list.map(
-      response.headers,
-      pair.map_second(_, dynamic.from(_)),
-    )
-    let set_cookie_headers: List(Dynamic) = key_filter(headers, "set-cookie")
-    let headers: Map(String, Dynamic) = map.from_list(headers)
-    let headers = map.insert(
-      headers,
-      "set-cookie",
-      dynamic.from(set_cookie_headers),
-    )
+    let headers = cowboy_format_headers(response.headers)
     let body = response.body
     cowboy_reply(status, headers, body, request)
   }
