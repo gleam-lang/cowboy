@@ -90,7 +90,7 @@ fn proplist_get_all(input: List(tuple(a, b)), key: a) -> List(b) {
 // In cowboy all header values are strings except set-cookie, which is a
 // list. This list has a special-case in Cowboy so we need to set it
 // correctly.
-// https://github.com/gleam-experiments/cowboy/issues/3
+// https://github.com/gleam-lang/cowboy/issues/3
 fn cowboy_format_headers(headers: List(Header)) -> Map(String, Dynamic) {
   let set_cookie_headers = proplist_get_all(headers, "set-cookie")
   headers
