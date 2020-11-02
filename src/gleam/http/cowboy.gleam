@@ -4,16 +4,16 @@ import gleam/map.{Map}
 import gleam/option.{None, Option, Some}
 import gleam/result
 import gleam/http.{Header}
-import gleam/otp/process.{Pid}
 import gleam/bit_builder.{BitBuilder}
 import gleam/dynamic.{Dynamic}
+import gleam/otp/actor.{ErlangStartResult}
 
 external type CowboyRequest
 
 external fn erlang_start_link(
   handler: fn(CowboyRequest) -> CowboyRequest,
   port: Int,
-) -> Result(Pid, Dynamic) =
+) -> ErlangStartResult =
   "gleam_cowboy_native" "start_link"
 
 external fn cowboy_reply(
@@ -123,13 +123,12 @@ fn service_to_handler(
   }
 }
 
-// TODO: refine error type
 // TODO: document
 // TODO: test
 pub fn start(
   service: http.Service(BitString, BitBuilder),
   on_port number: Int,
-) -> Result(Pid, Dynamic) {
+) -> ErlangStartResult {
   service
   |> service_to_handler
   |> erlang_start_link(number)
