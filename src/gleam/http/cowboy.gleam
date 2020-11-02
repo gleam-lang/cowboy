@@ -6,14 +6,16 @@ import gleam/result
 import gleam/http.{Header}
 import gleam/bit_builder.{BitBuilder}
 import gleam/dynamic.{Dynamic}
-import gleam/otp/actor.{ErlangStartResult}
+import gleam/otp/actor.{StartResult}
+import gleam/otp/process.{Pid}
+import gleam/otp/supervisor.{wrap_erlang_start_result}
 
 external type CowboyRequest
 
 external fn erlang_start_link(
   handler: fn(CowboyRequest) -> CowboyRequest,
   port: Int,
-) -> ErlangStartResult =
+) -> Result(Pid, Dynamic) =
   "gleam_cowboy_native" "start_link"
 
 external fn cowboy_reply(
@@ -128,8 +130,9 @@ fn service_to_handler(
 pub fn start(
   service: http.Service(BitString, BitBuilder),
   on_port number: Int,
-) -> ErlangStartResult {
+) -> StartResult(Pid) {
   service
   |> service_to_handler
   |> erlang_start_link(number)
+  |> wrap_erlang_start_result
 }
