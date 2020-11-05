@@ -130,7 +130,7 @@ fn service_to_handler(
 pub fn start(
   service: http.Service(BitString, BitBuilder),
   on_port number: Int,
-) -> StartResult(Pid) {
+) -> StartResult(a) {
   service
   |> service_to_handler
   |> erlang_start_link(number)
