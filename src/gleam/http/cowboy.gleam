@@ -8,7 +8,6 @@ import gleam/bit_builder.{BitBuilder}
 import gleam/dynamic.{Dynamic}
 import gleam/otp/actor.{StartResult}
 import gleam/otp/process.{Pid}
-import gleam/otp/supervisor.{wrap_erlang_start_result}
 
 external type CowboyRequest
 
@@ -134,5 +133,5 @@ pub fn start(
   service
   |> service_to_handler
   |> erlang_start_link(number)
-  |> wrap_erlang_start_result
+  |> actor.from_erlang_start_result
 }
