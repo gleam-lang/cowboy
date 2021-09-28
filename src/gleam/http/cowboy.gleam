@@ -44,7 +44,7 @@ fn get_headers(request) -> List(http.Header) {
   |> map.to_list
 }
 
-external fn get_body(CowboyRequest) -> tuple(BitString, CowboyRequest) =
+external fn get_body(CowboyRequest) -> #(BitString, CowboyRequest) =
   "gleam_cowboy_native" "read_entire_body"
 
 external fn erlang_get_scheme(CowboyRequest) -> String =
@@ -76,12 +76,12 @@ external fn get_host(CowboyRequest) -> String =
 external fn get_port(CowboyRequest) -> Int =
   "cowboy_req" "port"
 
-fn proplist_get_all(input: List(tuple(a, b)), key: a) -> List(b) {
+fn proplist_get_all(input: List(#(a, b)), key: a) -> List(b) {
   list.filter_map(
     input,
     fn(item) {
       case item {
-        tuple(k, v) if k == key -> Ok(v)
+        #(k, v) if k == key -> Ok(v)
         _ -> Error(Nil)
       }
     },
@@ -104,7 +104,7 @@ fn service_to_handler(
   service: http.Service(BitString, BitBuilder),
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
-    let tuple(body, request) = get_body(request)
+    let #(body, request) = get_body(request)
     let response =
       service(http.Request(
         body: body,
