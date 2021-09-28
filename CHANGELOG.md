@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.3 - 2021-09-28
+
+- Updated for Gleam v0.17.0.
+
 ## v0.2.2 - 2020-11-19
 
 - Updated for Gleam OTP v0.1.3.
