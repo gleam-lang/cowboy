@@ -14,5 +14,6 @@
   {modules, []},
 
   {licenses, ["Apache 2.0"]},
-  {links, [{"GitHub", "https://github.com/gleam-lang/cowboy"}]}
+  {links, [{"GitHub", "https://github.com/gleam-lang/cowboy"}]},
+  {include_files, ["gleam.toml", "gen"]}
 ]}.
