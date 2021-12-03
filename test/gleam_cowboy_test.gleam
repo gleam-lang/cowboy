@@ -1,2 +1,5 @@
-import gleam/http/cowboy
-import gleam/should
+import gleeunit
+
+pub fn main() {
+  gleeunit.main()
+}

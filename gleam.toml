@@ -1,1 +1,19 @@
 name = "gleam_cowboy"
+version = "0.3.0"
+licences = ["Apache-2.0"]
+description = "Run Gleam HTTP services with the Cowboy web server"
+
+repository = { type = "github", user = "gleam-lang", repo = "elli" }
+links = [
+  { title = "Website", href = "https://gleam.run" },
+  { title = "Sponsor", href = "https://github.com/sponsors/lpil" },
+]
+
+[dependencies]
+gleam_stdlib = "~> 0.18"
+gleam_http = "~> 2.1"
+gleam_otp = "~> 0.3"
+cowboy = "~> 2.0"
+
+[dev-dependencies]
+gleeunit = "~> 0.1"
