@@ -3,6 +3,7 @@
 A Gleam HTTP service adapter for the [Cowboy][cowboy] web server.
 
 ```rust
+import gleam/erlang
 import gleam/http/cowboy
 import gleam/http.{Request, Response}
 import gleam/bit_builder.{BitBuilder}
@@ -21,6 +22,7 @@ pub fn my_service(req: Request(BitString)) -> Response(BitBuilder) {
 //
 pub fn start() {
   cowboy.start(my_service, on_port: 3000)
+  erlang.sleep_forever()
 }
 ```
 
