@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.0 - 2022-02-05
+
+- Updated for `gleam_http` v3.0.0.
+
 ## v0.3.0 - 2021-12-03
 
 - Converted to use the Gleam build tool.
