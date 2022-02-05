@@ -4,6 +4,8 @@ import gleam/map.{Map}
 import gleam/option.{None, Option, Some}
 import gleam/result
 import gleam/http.{Header}
+import gleam/http/service.{Service}
+import gleam/http/request.{Request}
 import gleam/bit_builder.{BitBuilder}
 import gleam/dynamic.{Dynamic}
 import gleam/otp/actor.{StartResult}
@@ -101,12 +103,12 @@ fn cowboy_format_headers(headers: List(Header)) -> Map(String, Dynamic) {
 }
 
 fn service_to_handler(
-  service: http.Service(BitString, BitBuilder),
+  service: Service(BitString, BitBuilder),
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
     let #(body, request) = get_body(request)
     let response =
-      service(http.Request(
+      service(Request(
         body: body,
         headers: get_headers(request),
         host: get_host(request),
@@ -127,7 +129,7 @@ fn service_to_handler(
 // TODO: document
 // TODO: test
 pub fn start(
-  service: http.Service(BitString, BitBuilder),
+  service: Service(BitString, BitBuilder),
   on_port number: Int,
 ) -> StartResult(a) {
   service
