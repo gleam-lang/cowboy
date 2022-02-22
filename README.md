@@ -2,7 +2,7 @@
 
 A Gleam HTTP service adapter for the [Cowboy][cowboy] web server.
 
-```rust
+```gleam
 import gleam/erlang
 import gleam/http/cowboy
 import gleam/http.{Request, Response}
