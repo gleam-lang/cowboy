@@ -3,7 +3,7 @@ version = "0.4.0"
 licences = ["Apache-2.0"]
 description = "Run Gleam HTTP services with the Cowboy web server"
 
-repository = { type = "github", user = "gleam-lang", repo = "elli" }
+repository = { type = "github", user = "gleam-lang", repo = "cowboy" }
 links = [
   { title = "Website", href = "https://gleam.run" },
   { title = "Sponsor", href = "https://github.com/sponsors/lpil" },
