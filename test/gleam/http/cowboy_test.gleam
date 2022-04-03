@@ -1,10 +1,12 @@
 import gleam/erlang
 import gleam/http/cowboy
+import gleam/http/cowboy/websocket as ws
 import gleam/bit_builder.{BitBuilder}
 import gleam/http.{Get, Head, Post}
 import gleam/http/request.{Request}
 import gleam/http/response.{Response}
 import gleam/hackney
+import nerf/websocket as nerf
 
 pub fn echo_service(request: Request(BitString)) -> Response(BitBuilder) {
   let body = case request.body {
@@ -87,4 +89,39 @@ pub fn body_is_echoed_on_post_test() {
   assert 200 = resp.status
   assert Ok("Gleam") = response.get_header(resp, "made-with")
   assert "Ping" = resp.body
+}
+
+type WSState {
+  WSState(username: String, connected: Bool)
+}
+
+pub fn websocket_test() {
+  let port = 3082
+
+  assert Ok(_) =
+    ws.start(
+      fn(req) {
+        ws.Upgrade(WSState(
+          username: request.get_header(req, "x-username"),
+          connected: false,
+        ))
+      },
+      on_ws_init: fn(state) { #(ws.Ignore, WSState(..state, connected: true)) },
+      on_ws_frame: fn(state, frame) {
+        case frame {
+          ws.Text("whois") -> #(ws.Text(state.username), state)
+          _ -> #(ws.Ignore, state)
+        }
+      },
+      on_info: fn(state, _message) { #(ws.Ignore, state) },
+      on_port: port,
+    )
+
+  assert Ok(conn) =
+    nerf.connect("0.0.0.0", "/", port, [http.header("x-username", "E")])
+
+  nerf.send(conn, "whois")
+  assert Ok(nerf.Text("E")) = nerf.receive(conn, 500)
+
+  nerf.close(conn)
 }
