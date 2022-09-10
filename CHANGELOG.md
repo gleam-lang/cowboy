@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.0 - 2022-09-10
+
+- Updated for `gleam_otp` v0.5.0.
+
 ## v0.4.0 - 2022-02-05
 
 - Updated for `gleam_http` v3.0.0.

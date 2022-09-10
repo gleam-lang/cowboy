@@ -8,8 +8,7 @@ import gleam/http/service.{Service}
 import gleam/http/request.{Request}
 import gleam/bit_builder.{BitBuilder}
 import gleam/dynamic.{Dynamic}
-import gleam/otp/actor.{StartResult}
-import gleam/otp/process.{Pid}
+import gleam/erlang/process.{Pid}
 
 external type CowboyRequest
 
@@ -131,9 +130,8 @@ fn service_to_handler(
 pub fn start(
   service: Service(BitString, BitBuilder),
   on_port number: Int,
-) -> StartResult(a) {
+) -> Result(Pid, Dynamic) {
   service
   |> service_to_handler
   |> erlang_start_link(number)
-  |> actor.from_erlang_start_result
 }

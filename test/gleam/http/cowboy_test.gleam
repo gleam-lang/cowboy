@@ -1,4 +1,3 @@
-import gleam/erlang
 import gleam/http/cowboy
 import gleam/bit_builder.{BitBuilder}
 import gleam/http.{Get, Head, Post}
