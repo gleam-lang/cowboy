@@ -2,8 +2,15 @@
 
 A Gleam HTTP service adapter for the [Cowboy][cowboy] web server.
 
+
+## Installation
+
+```sh
+gleam add gleam_cowboy
+```
+
 ```gleam
-import gleam/erlang
+import gleam/process
 import gleam/http/cowboy
 import gleam/http/response.{Response}
 import gleam/http/request.{Request}
@@ -23,7 +30,7 @@ pub fn my_service(request: Request(t)) -> Response(BitBuilder) {
 //
 pub fn main() {
   cowboy.start(my_service, on_port: 3000)
-  erlang.sleep_forever()
+  process.sleep_forever()
 }
 ```
 
