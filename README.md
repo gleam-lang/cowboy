@@ -10,7 +10,7 @@ gleam add gleam_cowboy
 ```
 
 ```gleam
-import gleam/process
+import gleam/erlang/process
 import gleam/http/cowboy
 import gleam/http/response.{Response}
 import gleam/http/request.{Request}
