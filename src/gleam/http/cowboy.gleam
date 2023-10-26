@@ -20,14 +20,14 @@ fn erlang_start_link(
 
 @external(erlang, "cowboy_req", "reply")
 fn cowboy_reply(
-  a: Int,
-  b: Map(String, Dynamic),
-  c: BitBuilder,
-  d: CowboyRequest,
+  status: Int,
+  headers: Map(String, Dynamic),
+  body: BitBuilder,
+  request: CowboyRequest,
 ) -> CowboyRequest
 
 @external(erlang, "cowboy_req", "method")
-fn erlang_get_method(a: CowboyRequest) -> Dynamic
+fn erlang_get_method(request: CowboyRequest) -> Dynamic
 
 fn get_method(request) -> http.Method {
   request
@@ -37,7 +37,7 @@ fn get_method(request) -> http.Method {
 }
 
 @external(erlang, "cowboy_req", "headers")
-fn erlang_get_headers(a: CowboyRequest) -> Map(String, String)
+fn erlang_get_headers(request: CowboyRequest) -> Map(String, String)
 
 fn get_headers(request) -> List(http.Header) {
   request
@@ -46,10 +46,10 @@ fn get_headers(request) -> List(http.Header) {
 }
 
 @external(erlang, "gleam_cowboy_native", "read_entire_body")
-fn get_body(a: CowboyRequest) -> #(BitString, CowboyRequest)
+fn get_body(request: CowboyRequest) -> #(BitString, CowboyRequest)
 
 @external(erlang, "cowboy_req", "scheme")
-fn erlang_get_scheme(a: CowboyRequest) -> String
+fn erlang_get_scheme(request: CowboyRequest) -> String
 
 fn get_scheme(request) -> http.Scheme {
   request
@@ -59,7 +59,7 @@ fn get_scheme(request) -> http.Scheme {
 }
 
 @external(erlang, "cowboy_req", "qs")
-fn erlang_get_query(a: CowboyRequest) -> String
+fn erlang_get_query(request: CowboyRequest) -> String
 
 fn get_query(request) -> Option(String) {
   case erlang_get_query(request) {
@@ -69,13 +69,13 @@ fn get_query(request) -> Option(String) {
 }
 
 @external(erlang, "cowboy_req", "path")
-fn get_path(a: CowboyRequest) -> String
+fn get_path(request: CowboyRequest) -> String
 
 @external(erlang, "cowboy_req", "host")
-fn get_host(a: CowboyRequest) -> String
+fn get_host(request: CowboyRequest) -> String
 
 @external(erlang, "cowboy_req", "port")
-fn get_port(a: CowboyRequest) -> Int
+fn get_port(request: CowboyRequest) -> Int
 
 fn proplist_get_all(input: List(#(a, b)), key: a) -> List(b) {
   list.filter_map(
