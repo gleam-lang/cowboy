@@ -2,29 +2,30 @@
 # You typically do not need to edit this file
 
 packages = [
-  { name = "certifi", version = "2.9.0", build_tools = ["rebar3"], requirements = [], otp_app = "certifi", source = "hex", outer_checksum = "266DA46BDB06D6C6D35FDE799BCB28D36D985D424AD7C08B5BB48F5B5CDD4641" },
-  { name = "cowboy", version = "2.9.0", build_tools = ["make", "rebar3"], requirements = ["ranch", "cowlib"], otp_app = "cowboy", source = "hex", outer_checksum = "2C729F934B4E1AA149AFF882F57C6372C15399A20D54F65C8D67BEF583021BDE" },
-  { name = "cowlib", version = "2.11.0", build_tools = ["make", "rebar3"], requirements = [], otp_app = "cowlib", source = "hex", outer_checksum = "2B3E9DA0B21C4565751A6D4901C20D1B4CC25CBB7FD50D91D2AB6DD287BC86A9" },
-  { name = "gleam_erlang", version = "0.15.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_erlang", source = "hex", outer_checksum = "0C22868854FBF76F16D5B8BEFCC58C4EEAB85FF0C37214CFD06C2E3A56ACB2AC" },
-  { name = "gleam_hackney", version = "0.2.1", build_tools = ["gleam"], requirements = ["gleam_http", "gleam_stdlib", "hackney"], otp_app = "gleam_hackney", source = "hex", outer_checksum = "CCACA00027C827436D8EB945651392B6E5798CFC9E69907A28BE61832B0C02A4" },
-  { name = "gleam_http", version = "3.1.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_http", source = "hex", outer_checksum = "8E0A96A56CB5870252EACB4860B8BC2AF755F5E13F4AB99970C572C5BB315053" },
-  { name = "gleam_otp", version = "0.5.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_stdlib"], otp_app = "gleam_otp", source = "hex", outer_checksum = "43CDB5284EEFEE6E006A3B067E23E567ACE1224A72487491E47708FB506CC8F7" },
-  { name = "gleam_stdlib", version = "0.22.3", build_tools = ["gleam"], requirements = [], otp_app = "gleam_stdlib", source = "hex", outer_checksum = "F2C2D389B06426E1289D5419F89BDE8E0F7F35A40B2BBB3C88188481F0D44A9F" },
-  { name = "gleeunit", version = "0.6.2", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "A006864621DB80C4FBB0746580703502FD81A4D38D23FCB20A8120984D353DF0" },
-  { name = "hackney", version = "1.18.1", build_tools = ["rebar3"], requirements = ["parse_trans", "ssl_verify_fun", "unicode_util_compat", "mimerl", "certifi", "idna", "metrics"], otp_app = "hackney", source = "hex", outer_checksum = "A4ECDAFF44297E9B5894AE499E9A070EA1888C84AFDD1FD9B7B2BC384950128E" },
+  { name = "certifi", version = "2.12.0", build_tools = ["rebar3"], requirements = [], otp_app = "certifi", source = "hex", outer_checksum = "EE68D85DF22E554040CDB4BE100F33873AC6051387BAF6A8F6CE82272340FF1C" },
+  { name = "cowboy", version = "2.10.0", build_tools = ["make", "rebar3"], requirements = ["cowlib", "ranch"], otp_app = "cowboy", source = "hex", outer_checksum = "3AFDCCB7183CC6F143CB14D3CF51FA00E53DB9EC80CDCD525482F5E99BC41D6B" },
+  { name = "cowlib", version = "2.12.1", build_tools = ["make", "rebar3"], requirements = [], otp_app = "cowlib", source = "hex", outer_checksum = "163B73F6367A7341B33C794C4E88E7DBFE6498AC42DCD69EF44C5BC5507C8DB0" },
+  { name = "gleam_erlang", version = "0.22.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_erlang", source = "hex", outer_checksum = "367D8B41A7A86809928ED1E7E55BFD0D46D7C4CF473440190F324AFA347109B4" },
+  { name = "gleam_hackney", version = "1.1.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "hackney", "gleam_http"], otp_app = "gleam_hackney", source = "hex", outer_checksum = "CA69AD9061C4A8775A7BD445DE33ECEFD87379AF8E5B028F3DD0216BECA5DD0B" },
+  { name = "gleam_http", version = "3.5.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_http", source = "hex", outer_checksum = "FAE9AE3EB1CA90C2194615D20FFFD1E28B630E84DACA670B28D959B37BCBB02C" },
+  { name = "gleam_otp", version = "0.7.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "gleam_erlang"], otp_app = "gleam_otp", source = "hex", outer_checksum = "ED7381E90636E18F5697FD7956EECCA635A3B65538DC2BE2D91A38E61DCE8903" },
+  { name = "gleam_stdlib", version = "0.31.0", build_tools = ["gleam"], requirements = [], otp_app = "gleam_stdlib", source = "hex", outer_checksum = "6D1BC5B4D4179B9FEE866B1E69FE180AC2CE485AD90047C0B32B2CA984052736" },
+  { name = "gleeunit", version = "0.11.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "1397E5C4AC4108769EE979939AC39BF7870659C5AFB714630DEEEE16B8272AD5" },
+  { name = "hackney", version = "1.20.1", build_tools = ["rebar3"], requirements = ["mimerl", "ssl_verify_fun", "idna", "metrics", "unicode_util_compat", "certifi", "parse_trans"], otp_app = "hackney", source = "hex", outer_checksum = "FE9094E5F1A2A2C0A7D10918FEE36BFEC0EC2A979994CFF8CFE8058CD9AF38E3" },
   { name = "idna", version = "6.1.1", build_tools = ["rebar3"], requirements = ["unicode_util_compat"], otp_app = "idna", source = "hex", outer_checksum = "92376EB7894412ED19AC475E4A86F7B413C1B9FBB5BD16DCCD57934157944CEA" },
   { name = "metrics", version = "1.0.1", build_tools = ["rebar3"], requirements = [], otp_app = "metrics", source = "hex", outer_checksum = "69B09ADDDC4F74A40716AE54D140F93BEB0FB8978D8636EADED0C31B6F099F16" },
   { name = "mimerl", version = "1.2.0", build_tools = ["rebar3"], requirements = [], otp_app = "mimerl", source = "hex", outer_checksum = "F278585650AA581986264638EBF698F8BB19DF297F66AD91B18910DFC6E19323" },
-  { name = "parse_trans", version = "3.3.1", build_tools = ["rebar3"], requirements = [], otp_app = "parse_trans", source = "hex", outer_checksum = "07CD9577885F56362D414E8C4C4E6BDF10D43A8767ABB92D24CBE8B24C54888B" },
+  { name = "parse_trans", version = "3.4.1", build_tools = ["rebar3"], requirements = [], otp_app = "parse_trans", source = "hex", outer_checksum = "620A406CE75DADA827B82E453C19CF06776BE266F5A67CFF34E1EF2CBB60E49A" },
   { name = "ranch", version = "1.8.0", build_tools = ["make", "rebar3"], requirements = [], otp_app = "ranch", source = "hex", outer_checksum = "49FBCFD3682FAB1F5D109351B61257676DA1A2FDBE295904176D5E521A2DDFE5" },
-  { name = "ssl_verify_fun", version = "1.1.6", build_tools = ["mix", "rebar3", "make"], requirements = [], otp_app = "ssl_verify_fun", source = "hex", outer_checksum = "BDB0D2471F453C88FF3908E7686F86F9BE327D065CC1EC16FA4540197EA04680" },
+  { name = "ssl_verify_fun", version = "1.1.7", build_tools = ["mix", "rebar3", "make"], requirements = [], otp_app = "ssl_verify_fun", source = "hex", outer_checksum = "FE4C190E8F37401D30167C8C405EDA19469F34577987C76DDE613E838BBC67F8" },
   { name = "unicode_util_compat", version = "0.7.0", build_tools = ["rebar3"], requirements = [], otp_app = "unicode_util_compat", source = "hex", outer_checksum = "25EEE6D67DF61960CF6A794239566599B09E17E668D3700247BC498638152521" },
 ]
 
 [requirements]
-cowboy = "~> 2.0"
-gleam_hackney = "~> 0.2"
-gleam_http = "~> 3.0"
-gleam_otp = "~> 0.3"
-gleam_stdlib = "~> 0.18"
-gleeunit = "~> 0.1"
+cowboy = { version = "~> 2.0" }
+gleam_erlang = { version = "~> 0.22" }
+gleam_hackney = { version = "~> 1.0" }
+gleam_http = { version = "~> 3.0" }
+gleam_otp = { version = "~> 0.7" }
+gleam_stdlib = { version = "~> 0.31" }
+gleeunit = { version = "~> 0.10" }

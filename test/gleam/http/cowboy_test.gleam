@@ -19,7 +19,7 @@ pub fn request_test() {
   // TODO: Assign these ports on random free ones aviable
   // TODO: Shut down server after test?
   let port = 3078
-  assert Ok(_) = cowboy.start(echo_service, on_port: port)
+  let assert Ok(_) = cowboy.start(echo_service, on_port: port)
 
   let req =
     request.new()
@@ -28,15 +28,15 @@ pub fn request_test() {
     |> request.set_scheme(http.Http)
     |> request.set_port(port)
 
-  assert Ok(resp) = hackney.send(req)
-  assert 200 = resp.status
-  assert Ok("Gleam") = response.get_header(resp, "made-with")
-  assert "Default body" = resp.body
+  let assert Ok(resp) = hackney.send(req)
+  let assert 200 = resp.status
+  let assert Ok("Gleam") = response.get_header(resp, "made-with")
+  let assert "Default body" = resp.body
 }
 
 pub fn get_request_does_not_discard_body_test() {
   let port = 3079
-  assert Ok(_) = cowboy.start(echo_service, on_port: port)
+  let assert Ok(_) = cowboy.start(echo_service, on_port: port)
 
   let req =
     request.new()
@@ -46,15 +46,15 @@ pub fn get_request_does_not_discard_body_test() {
     |> request.set_port(port)
     |> request.set_body("This does NOT get dropped")
 
-  assert Ok(resp) = hackney.send(req)
-  assert 200 = resp.status
-  assert Ok("Gleam") = response.get_header(resp, "made-with")
-  assert "This does NOT get dropped" = resp.body
+  let assert Ok(resp) = hackney.send(req)
+  let assert 200 = resp.status
+  let assert Ok("Gleam") = response.get_header(resp, "made-with")
+  let assert "This does NOT get dropped" = resp.body
 }
 
 pub fn head_request_discards_body_test() {
   let port = 3080
-  assert Ok(_) = cowboy.start(echo_service, on_port: port)
+  let assert Ok(_) = cowboy.start(echo_service, on_port: port)
 
   let req =
     request.new()
@@ -64,15 +64,15 @@ pub fn head_request_discards_body_test() {
     |> request.set_port(port)
     |> request.set_body("This gets dropped")
 
-  assert Ok(resp) = hackney.send(req)
-  assert 200 = resp.status
-  assert Ok("Gleam") = response.get_header(resp, "made-with")
-  assert "" = resp.body
+  let assert Ok(resp) = hackney.send(req)
+  let assert 200 = resp.status
+  let assert Ok("Gleam") = response.get_header(resp, "made-with")
+  let assert "" = resp.body
 }
 
 pub fn body_is_echoed_on_post_test() {
   let port = 3081
-  assert Ok(_) = cowboy.start(echo_service, on_port: port)
+  let assert Ok(_) = cowboy.start(echo_service, on_port: port)
 
   let req =
     request.new()
@@ -82,8 +82,8 @@ pub fn body_is_echoed_on_post_test() {
     |> request.set_port(port)
     |> request.set_body("Ping")
 
-  assert Ok(resp) = hackney.send(req)
-  assert 200 = resp.status
-  assert Ok("Gleam") = response.get_header(resp, "made-with")
-  assert "Ping" = resp.body
+  let assert Ok(resp) = hackney.send(req)
+  let assert 200 = resp.status
+  let assert Ok("Gleam") = response.get_header(resp, "made-with")
+  let assert "Ping" = resp.body
 }
