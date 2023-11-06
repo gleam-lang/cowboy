@@ -1,14 +1,14 @@
 import gleam/list
 import gleam/pair
-import gleam/map.{Map}
-import gleam/option.{None, Option, Some}
+import gleam/map.{type Map}
+import gleam/option.{type Option, None, Some}
 import gleam/result
-import gleam/http.{Header}
-import gleam/http/service.{Service}
+import gleam/http.{type Header}
+import gleam/http/service.{type Service}
 import gleam/http/request.{Request}
-import gleam/bit_builder.{BitBuilder}
-import gleam/dynamic.{Dynamic}
-import gleam/erlang/process.{Pid}
+import gleam/bit_builder.{type BitBuilder}
+import gleam/dynamic.{type Dynamic}
+import gleam/erlang/process.{type Pid}
 
 type CowboyRequest
 
@@ -46,7 +46,7 @@ fn get_headers(request) -> List(http.Header) {
 }
 
 @external(erlang, "gleam_cowboy_native", "read_entire_body")
-fn get_body(request: CowboyRequest) -> #(BitString, CowboyRequest)
+fn get_body(request: CowboyRequest) -> #(BitArray, CowboyRequest)
 
 @external(erlang, "cowboy_req", "scheme")
 fn erlang_get_scheme(request: CowboyRequest) -> String
@@ -102,7 +102,7 @@ fn cowboy_format_headers(headers: List(Header)) -> Map(String, Dynamic) {
 }
 
 fn service_to_handler(
-  service: Service(BitString, BitBuilder),
+  service: Service(BitArray, BitBuilder),
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
     let #(body, request) = get_body(request)
@@ -128,7 +128,7 @@ fn service_to_handler(
 // TODO: document
 // TODO: test
 pub fn start(
-  service: Service(BitString, BitBuilder),
+  service: Service(BitArray, BitBuilder),
   on_port number: Int,
 ) -> Result(Pid, Dynamic) {
   service

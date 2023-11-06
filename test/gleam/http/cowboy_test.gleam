@@ -1,14 +1,14 @@
 import gleam/http/cowboy
-import gleam/bit_builder.{BitBuilder}
+import gleam/bytes_builder.{type BytesBuilder}
 import gleam/http.{Get, Head, Post}
-import gleam/http/request.{Request}
-import gleam/http/response.{Response}
+import gleam/http/request.{type Request}
+import gleam/http/response.{type Response}
 import gleam/hackney
 
-pub fn echo_service(request: Request(BitString)) -> Response(BitBuilder) {
+pub fn echo_service(request: Request(BitArray)) -> Response(BytesBuilder) {
   let body = case request.body {
-    <<>> -> bit_builder.from_string("Default body")
-    x -> bit_builder.from_bit_string(x)
+    <<>> -> bytes_builder.from_string("Default body")
+    x -> bytes_builder.from_bit_array(x)
   }
   response.new(200)
   |> response.prepend_header("made-with", "Gleam")

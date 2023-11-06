@@ -2,6 +2,8 @@
 
 A Gleam HTTP service adapter for the [Cowboy][cowboy] web server.
 
+You may want to consider using the [Mist][mist] web server instead as it has
+better performance, type safe websockets, and is written entirely in Gleam.
 
 ## Installation
 
@@ -40,3 +42,4 @@ Cowboy does not support duplicate HTTP headers so any duplicates specified by
 the Gleam HTTP service will not be sent to the client.
 
 [cowboy]: https://github.com/ninenines/cowboy
+[mist]: https://github.com/rawhat/mist
