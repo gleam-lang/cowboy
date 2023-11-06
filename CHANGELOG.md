@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0 - 2023-11-06
+
+- Updated for Gleam v0.32.
+
 ## v0.5.0 - 2022-09-10
 
 - Updated for `gleam_otp` v0.5.0.
