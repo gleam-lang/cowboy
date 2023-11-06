@@ -3,7 +3,8 @@
 A Gleam HTTP service adapter for the [Cowboy][cowboy] web server.
 
 You may want to consider using the [Mist][mist] web server instead as it has
-better performance, type safe websockets, and is written entirely in Gleam.
+better performance, features type safe websockets, and is written entirely in
+Gleam. It is also supported by the [Wisp][wisp] web framework.
 
 ## Installation
 
@@ -43,3 +44,4 @@ the Gleam HTTP service will not be sent to the client.
 
 [cowboy]: https://github.com/ninenines/cowboy
 [mist]: https://github.com/rawhat/mist
+[wisp]: https://github.com/lpil/wisp
