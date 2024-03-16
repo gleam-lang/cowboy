@@ -1,12 +1,12 @@
 import gleam/list
 import gleam/pair
-import gleam/map.{type Map}
+import gleam/dict.{type Dict}
 import gleam/option.{type Option, None, Some}
 import gleam/result
 import gleam/http.{type Header}
 import gleam/http/service.{type Service}
 import gleam/http/request.{Request}
-import gleam/bit_builder.{type BitBuilder}
+import gleam/bytes_builder.{type BytesBuilder}
 import gleam/dynamic.{type Dynamic}
 import gleam/erlang/process.{type Pid}
 
@@ -21,8 +21,8 @@ fn erlang_start_link(
 @external(erlang, "cowboy_req", "reply")
 fn cowboy_reply(
   status: Int,
-  headers: Map(String, Dynamic),
-  body: BitBuilder,
+  headers: Dict(String, Dynamic),
+  body: BytesBuilder,
   request: CowboyRequest,
 ) -> CowboyRequest
 
@@ -37,12 +37,12 @@ fn get_method(request) -> http.Method {
 }
 
 @external(erlang, "cowboy_req", "headers")
-fn erlang_get_headers(request: CowboyRequest) -> Map(String, String)
+fn erlang_get_headers(request: CowboyRequest) -> Dict(String, String)
 
 fn get_headers(request) -> List(http.Header) {
   request
   |> erlang_get_headers
-  |> map.to_list
+  |> dict.to_list
 }
 
 @external(erlang, "gleam_cowboy_native", "read_entire_body")
@@ -93,16 +93,16 @@ fn proplist_get_all(input: List(#(a, b)), key: a) -> List(b) {
 // list. This list has a special-case in Cowboy so we need to set it
 // correctly.
 // https://github.com/gleam-lang/cowboy/issues/3
-fn cowboy_format_headers(headers: List(Header)) -> Map(String, Dynamic) {
+fn cowboy_format_headers(headers: List(Header)) -> Dict(String, Dynamic) {
   let set_cookie_headers = proplist_get_all(headers, "set-cookie")
   headers
   |> list.map(pair.map_second(_, dynamic.from))
-  |> map.from_list
-  |> map.insert("set-cookie", dynamic.from(set_cookie_headers))
+  |> dict.from_list
+  |> dict.insert("set-cookie", dynamic.from(set_cookie_headers))
 }
 
 fn service_to_handler(
-  service: Service(BitArray, BitBuilder),
+  service: Service(BitArray, BytesBuilder),
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
     let #(body, request) = get_body(request)
@@ -128,7 +128,7 @@ fn service_to_handler(
 // TODO: document
 // TODO: test
 pub fn start(
-  service: Service(BitArray, BitBuilder),
+  service: Service(BitArray, BytesBuilder),
   on_port number: Int,
 ) -> Result(Pid, Dynamic) {
   service
