@@ -10,13 +10,20 @@ import gleam/bytes_builder.{type BytesBuilder}
 import gleam/dynamic.{type Dynamic}
 import gleam/erlang/process.{type Pid}
 
-type CowboyRequest
+type CowboyRequest 
 
 @external(erlang, "gleam_cowboy_native", "start_link")
 fn erlang_start_link(
   handler: fn(CowboyRequest) -> CowboyRequest,
   port: Int,
 ) -> Result(Pid, Dynamic)
+
+@external(erlang, "gleam_cowboy_native", "set_headers")
+fn erlang_set_headers(headers: Dict(String, Dynamic), request: CowboyRequest) -> CowboyRequest
+
+fn set_headers(headers: Dict(String, Dynamic), request: CowboyRequest) -> CowboyRequest {
+  erlang_set_headers(headers, request)
+}
 
 @external(erlang, "cowboy_req", "reply")
 fn cowboy_reply(
@@ -120,8 +127,12 @@ fn service_to_handler(
     let status = response.status
 
     let headers = cowboy_format_headers(response.headers)
+    // We set headers directly on the CowboyRequest as we cannot set cookie headers
+    // using cowboy_req:set_resp_headers as of 2.11.0.
+    // https://github.com/ninenines/cowboy/pull/1624#issuecomment-1915324578
+    let request = set_headers(headers, request)
     let body = response.body
-    cowboy_reply(status, headers, body, request)
+    cowboy_reply(status, dict.new(), body, request)
   }
 }
 

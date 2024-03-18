@@ -14,7 +14,7 @@ links = [
 gleam_stdlib = "~> 0.31"
 gleam_http = "~> 3.0"
 gleam_otp = "~> 0.7"
-cowboy = "~> 2.10.0"
+cowboy = "~> 2.0"
 gleam_erlang = "~> 0.22"
 
 [dev-dependencies]

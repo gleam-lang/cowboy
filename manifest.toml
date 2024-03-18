@@ -3,8 +3,8 @@
 
 packages = [
   { name = "certifi", version = "2.12.0", build_tools = ["rebar3"], requirements = [], otp_app = "certifi", source = "hex", outer_checksum = "EE68D85DF22E554040CDB4BE100F33873AC6051387BAF6A8F6CE82272340FF1C" },
-  { name = "cowboy", version = "2.10.0", build_tools = ["make", "rebar3"], requirements = ["cowlib", "ranch"], otp_app = "cowboy", source = "hex", outer_checksum = "3AFDCCB7183CC6F143CB14D3CF51FA00E53DB9EC80CDCD525482F5E99BC41D6B" },
-  { name = "cowlib", version = "2.12.1", build_tools = ["make", "rebar3"], requirements = [], otp_app = "cowlib", source = "hex", outer_checksum = "163B73F6367A7341B33C794C4E88E7DBFE6498AC42DCD69EF44C5BC5507C8DB0" },
+  { name = "cowboy", version = "2.12.0", build_tools = ["make", "rebar3"], requirements = ["cowlib", "ranch"], otp_app = "cowboy", source = "hex", outer_checksum = "8A7ABE6D183372CEB21CAA2709BEC928AB2B72E18A3911AA1771639BEF82651E" },
+  { name = "cowlib", version = "2.13.0", build_tools = ["make", "rebar3"], requirements = [], otp_app = "cowlib", source = "hex", outer_checksum = "E1E1284DC3FC030A64B1AD0D8382AE7E99DA46C3246B815318A4B848873800A4" },
   { name = "gleam_erlang", version = "0.24.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_erlang", source = "hex", outer_checksum = "26BDB52E61889F56A291CB34167315780EE4AA20961917314446542C90D1C1A0" },
   { name = "gleam_hackney", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_http", "gleam_stdlib", "hackney"], otp_app = "gleam_hackney", source = "hex", outer_checksum = "066B1A55D37DBD61CC72A1C4EDE43C6015B1797FAF3818C16FE476534C7B6505" },
   { name = "gleam_http", version = "3.6.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_http", source = "hex", outer_checksum = "8C07DF9DF8CC7F054C650839A51C30A7D3C26482AC241C899C1CEA86B22DBE51" },
@@ -22,7 +22,7 @@ packages = [
 ]
 
 [requirements]
-cowboy = { version = "~> 2.10.0" }
+cowboy = { version = "~> 2.0" }
 gleam_erlang = { version = "~> 0.22" }
 gleam_hackney = { version = "~> 1.0" }
 gleam_http = { version = "~> 3.0" }
