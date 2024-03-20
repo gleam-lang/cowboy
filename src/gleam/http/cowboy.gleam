@@ -1,16 +1,16 @@
-import gleam/list
-import gleam/pair
-import gleam/dict.{type Dict}
-import gleam/option.{type Option, None, Some}
-import gleam/result
-import gleam/http.{type Header}
-import gleam/http/service.{type Service}
-import gleam/http/request.{Request}
 import gleam/bytes_builder.{type BytesBuilder}
+import gleam/dict.{type Dict}
 import gleam/dynamic.{type Dynamic}
 import gleam/erlang/process.{type Pid}
+import gleam/http.{type Header}
+import gleam/http/request.{Request}
+import gleam/http/service.{type Service}
+import gleam/list
+import gleam/option.{type Option, None, Some}
+import gleam/pair
+import gleam/result
 
-type CowboyRequest 
+type CowboyRequest
 
 @external(erlang, "gleam_cowboy_native", "start_link")
 fn erlang_start_link(
@@ -19,9 +19,15 @@ fn erlang_start_link(
 ) -> Result(Pid, Dynamic)
 
 @external(erlang, "gleam_cowboy_native", "set_headers")
-fn erlang_set_headers(headers: Dict(String, Dynamic), request: CowboyRequest) -> CowboyRequest
+fn erlang_set_headers(
+  headers: Dict(String, Dynamic),
+  request: CowboyRequest,
+) -> CowboyRequest
 
-fn set_headers(headers: Dict(String, Dynamic), request: CowboyRequest) -> CowboyRequest {
+fn set_headers(
+  headers: Dict(String, Dynamic),
+  request: CowboyRequest,
+) -> CowboyRequest {
   erlang_set_headers(headers, request)
 }
 
@@ -85,15 +91,12 @@ fn get_host(request: CowboyRequest) -> String
 fn get_port(request: CowboyRequest) -> Int
 
 fn proplist_get_all(input: List(#(a, b)), key: a) -> List(b) {
-  list.filter_map(
-    input,
-    fn(item) {
-      case item {
-        #(k, v) if k == key -> Ok(v)
-        _ -> Error(Nil)
-      }
-    },
-  )
+  list.filter_map(input, fn(item) {
+    case item {
+      #(k, v) if k == key -> Ok(v)
+      _ -> Error(Nil)
+    }
+  })
 }
 
 // In cowboy all header values are strings except set-cookie, which is a

@@ -1,10 +1,10 @@
-import gleam/http/cowboy
 import gleam/bytes_builder.{type BytesBuilder}
-import gleam/http.{Get, Head, Post, Http}
+import gleam/hackney
+import gleam/http.{Get, Head, Http, Post}
+import gleam/http/cookie
+import gleam/http/cowboy
 import gleam/http/request.{type Request}
 import gleam/http/response.{type Response}
-import gleam/http/cookie
-import gleam/hackney
 import gleam/list
 
 pub fn echo_service(request: Request(BitArray)) -> Response(BytesBuilder) {
