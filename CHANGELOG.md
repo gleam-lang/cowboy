@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.0 - 2024-03-20
+
+- Updated for Gleam v1.0.0.
+- Support dropped for Cowboy < v2.5 due to a breaking change.
+
 ## v0.6.0 - 2023-11-06
 
 - Updated for Gleam v0.32.
