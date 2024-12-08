@@ -1,4 +1,4 @@
-import gleam/bytes_builder.{type BytesBuilder}
+import gleam/bytes_tree.{type BytesTree}
 import gleam/hackney
 import gleam/http.{Get, Head, Http, Post}
 import gleam/http/cookie
@@ -7,10 +7,10 @@ import gleam/http/request.{type Request}
 import gleam/http/response.{type Response}
 import gleam/list
 
-pub fn echo_service(request: Request(BitArray)) -> Response(BytesBuilder) {
+pub fn echo_service(request: Request(BitArray)) -> Response(BytesTree) {
   let body = case request.body {
-    <<>> -> bytes_builder.from_string("Default body")
-    x -> bytes_builder.from_bit_array(x)
+    <<>> -> bytes_tree.from_string("Default body")
+    x -> bytes_tree.from_bit_array(x)
   }
   response.new(200)
   |> response.prepend_header("made-with", "Gleam")

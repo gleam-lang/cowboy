@@ -1,10 +1,10 @@
-import gleam/bytes_builder.{type BytesBuilder}
+import gleam/bytes_tree.{type BytesTree}
 import gleam/dict.{type Dict}
 import gleam/dynamic.{type Dynamic}
 import gleam/erlang/process.{type Pid}
 import gleam/http.{type Header}
-import gleam/http/request.{Request}
-import gleam/http/service.{type Service}
+import gleam/http/request.{type Request, Request}
+import gleam/http/response.{type Response}
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import gleam/pair
@@ -35,7 +35,7 @@ fn set_headers(
 fn cowboy_reply(
   status: Int,
   headers: Dict(String, Dynamic),
-  body: BytesBuilder,
+  body: BytesTree,
   request: CowboyRequest,
 ) -> CowboyRequest
 
@@ -112,7 +112,7 @@ fn cowboy_format_headers(headers: List(Header)) -> Dict(String, Dynamic) {
 }
 
 fn service_to_handler(
-  service: Service(BitArray, BytesBuilder),
+  service: fn(Request(BitArray)) -> Response(BytesTree),
 ) -> fn(CowboyRequest) -> CowboyRequest {
   fn(request) {
     let #(body, request) = get_body(request)
@@ -142,7 +142,7 @@ fn service_to_handler(
 // TODO: document
 // TODO: test
 pub fn start(
-  service: Service(BitArray, BytesBuilder),
+  service: fn(Request(BitArray)) -> Response(BytesTree),
   on_port number: Int,
 ) -> Result(Pid, Dynamic) {
   service

@@ -1,5 +1,5 @@
 name = "gleam_cowboy"
-version = "0.7.0"
+version = "1.0.0"
 licences = ["Apache-2.0"]
 description = "Run Gleam HTTP services with the Cowboy web server"
 gleam = ">= 1.0.0"
@@ -11,7 +11,7 @@ links = [
 ]
 
 [dependencies]
-gleam_stdlib = "~> 0.31"
+gleam_stdlib = ">= 0.45.0 and < 2.0.0"
 gleam_http = "~> 3.0"
 gleam_otp = "~> 0.7"
 cowboy = "~> 2.5"
