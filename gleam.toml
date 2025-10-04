@@ -12,11 +12,11 @@ links = [
 
 [dependencies]
 gleam_stdlib = ">= 0.45.0 and < 2.0.0"
-gleam_http = "~> 3.0"
-gleam_otp = "~> 0.7"
-cowboy = "~> 2.5"
-gleam_erlang = "~> 0.22"
+cowboy = ">= 2.5.0 and < 3.0.0"
+gleam_erlang = ">= 1.0.0 and < 2.0.0"
+gleam_http = ">= 4.0.0 and < 5.0.0"
+gleam_otp = ">= 1.0.0 and < 2.0.0"
 
 [dev-dependencies]
-gleeunit = "~> 1.0"
-gleam_hackney = "~> 1.0"
+gleeunit = ">= 1.0.0 and < 2.0.0"
+gleam_hackney = ">= 1.0.0 and < 2.0.0"
