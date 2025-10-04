@@ -7,7 +7,6 @@ import gleam/http/request.{type Request, Request}
 import gleam/http/response.{type Response}
 import gleam/list
 import gleam/option.{type Option, None, Some}
-import gleam/pair
 import gleam/result
 
 type CowboyRequest
@@ -40,12 +39,12 @@ fn cowboy_reply(
 ) -> CowboyRequest
 
 @external(erlang, "cowboy_req", "method")
-fn erlang_get_method(request: CowboyRequest) -> Dynamic
+fn erlang_get_method(request: CowboyRequest) -> String
 
 fn get_method(request) -> http.Method {
   request
   |> erlang_get_method
-  |> http.method_from_dynamic
+  |> http.parse_method
   |> result.unwrap(http.Get)
 }
 
@@ -90,26 +89,23 @@ fn get_host(request: CowboyRequest) -> String
 @external(erlang, "cowboy_req", "port")
 fn get_port(request: CowboyRequest) -> Int
 
-fn proplist_get_all(input: List(#(a, b)), key: a) -> List(b) {
-  list.filter_map(input, fn(item) {
-    case item {
-      #(k, v) if k == key -> Ok(v)
-      _ -> Error(Nil)
-    }
-  })
-}
-
 // In cowboy all header values are strings except set-cookie, which is a
 // list. This list has a special-case in Cowboy so we need to set it
 // correctly.
 // https://github.com/gleam-lang/cowboy/issues/3
 fn cowboy_format_headers(headers: List(Header)) -> Dict(String, Dynamic) {
-  let set_cookie_headers = proplist_get_all(headers, "set-cookie")
-  headers
-  |> list.map(pair.map_second(_, dynamic.from))
-  |> dict.from_list
-  |> dict.insert("set-cookie", dynamic.from(set_cookie_headers))
+  let set_cookie_headers = list.key_filter(headers, "set-cookie")
+
+  dict.new()
+  |> list.fold(over: headers, with: fn(headers, header) {
+    let #(key, value) = header
+    dict.insert(headers, key, to_dynamic(value))
+  })
+  |> dict.insert("set-cookie", to_dynamic(set_cookie_headers))
 }
+
+@external(erlang, "gleam_cowboy_native", "to_dynamic")
+fn to_dynamic(value: any) -> Dynamic
 
 fn service_to_handler(
   service: fn(Request(BitArray)) -> Response(BytesTree),

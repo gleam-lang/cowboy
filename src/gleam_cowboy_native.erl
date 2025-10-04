@@ -1,6 +1,6 @@
 -module(gleam_cowboy_native).
 
--export([init/2, start_link/2, read_entire_body/1, set_headers/2]).
+-export([init/2, start_link/2, read_entire_body/1, set_headers/2, to_dynamic/1]).
 
 start_link(Handler, Port) ->
     RanchOptions = #{
@@ -32,3 +32,6 @@ read_entire_body(Body, Req0) ->
 
 set_headers(Headers, Req) ->
   Req#{resp_headers => Headers}.
+
+to_dynamic(Value) ->
+    Value.
