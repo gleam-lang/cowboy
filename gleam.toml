@@ -1,5 +1,5 @@
 name = "gleam_cowboy"
-version = "1.0.0"
+version = "1.1.0"
 licences = ["Apache-2.0"]
 description = "Run Gleam HTTP services with the Cowboy web server"
 gleam = ">= 1.4.0"
